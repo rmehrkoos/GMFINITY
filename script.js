@@ -193,3 +193,5 @@ function displayMovies(movies) {
 
 // Event listener for the search button
 searchButton.addEventListener("click", searchMovies);
+
+//testing
