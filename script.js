@@ -90,19 +90,67 @@ function openMovieSelectionDialogFromResults(movie) {
 function displayPlaylists() {
   playlistList.innerHTML = ""; // Clear previous playlists
 
-  playlists.forEach((playlist, index) => {
-    const playlistItem = document.createElement("li");
+  // Separate public and private playlists
+  const publicPlaylists = playlists.filter((playlist) => playlist.public);
+  const privatePlaylists = playlists.filter((playlist) => !playlist.public);
 
-    // Create a clickable playlist name to display the movies added
-    const playlistNameLink = document.createElement("a");
-    playlistNameLink.textContent = `${playlist.name} (${playlist.public ? "Public" : "Private"})`;
-    playlistNameLink.href = "#"; // For the sake of demonstration, we'll use "#" as the link, but you can implement the actual functionality here
-    playlistNameLink.addEventListener("click", () => displayMoviesInPlaylist(index));
+  // Display public playlists
+  if (publicPlaylists.length > 0) {
+    const publicPlaylistSection = document.createElement("section");
+    const publicPlaylistHeader = document.createElement("h3");
+    publicPlaylistHeader.textContent = "Public Playlists";
+    publicPlaylistHeader.classList.add("public"); // Add the class for blue color
+    publicPlaylistSection.appendChild(publicPlaylistHeader);
 
-    playlistItem.appendChild(playlistNameLink);
-    playlistList.appendChild(playlistItem);
-  });
+    publicPlaylists.forEach((playlist, index) => {
+      const playlistItem = document.createElement("li");
+      const folderIcon = document.createElement("i");
+      folderIcon.classList.add("fas", "fa-folder");
+      const playlistNameLink = document.createElement("a");
+      playlistNameLink.textContent = playlist.name;
+      playlistNameLink.href = "#"; // Add your desired link here
+
+      // Add padding between the icon and text
+      playlistNameLink.style.paddingLeft = "8px";
+
+      playlistNameLink.addEventListener("click", () => displayMoviesInPlaylist(index));
+      playlistItem.appendChild(folderIcon);
+      playlistItem.appendChild(playlistNameLink);
+      publicPlaylistSection.appendChild(playlistItem);
+    });
+
+    playlistList.appendChild(publicPlaylistSection);
+  }
+
+  // Display private playlists
+  if (privatePlaylists.length > 0) {
+    const privatePlaylistSection = document.createElement("section");
+    const privatePlaylistHeader = document.createElement("h3");
+    privatePlaylistHeader.textContent = "Private Playlists";
+    privatePlaylistHeader.classList.add("private"); // Add the class for red color
+    privatePlaylistSection.appendChild(privatePlaylistHeader);
+
+    privatePlaylists.forEach((playlist, index) => {
+      const playlistItem = document.createElement("li");
+      const folderIcon = document.createElement("i");
+      folderIcon.classList.add("fas", "fa-folder");
+      const playlistNameLink = document.createElement("a");
+      playlistNameLink.textContent = playlist.name;
+      playlistNameLink.href = "#"; // Add your desired link here
+
+      // Add padding between the icon and text
+      playlistNameLink.style.paddingLeft = "8px";
+
+      playlistNameLink.addEventListener("click", () => displayMoviesInPlaylist(index));
+      playlistItem.appendChild(folderIcon);
+      playlistItem.appendChild(playlistNameLink);
+      privatePlaylistSection.appendChild(playlistItem);
+    });
+
+    playlistList.appendChild(privatePlaylistSection);
+  }
 }
+
 
 // Function to display movies in a specific playlist
 function displayMoviesInPlaylist(playlistIndex) {
@@ -193,5 +241,3 @@ function displayMovies(movies) {
 
 // Event listener for the search button
 searchButton.addEventListener("click", searchMovies);
-
-//testing

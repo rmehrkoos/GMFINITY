@@ -5,12 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movie Playlist</title>
-  <style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
+  <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f3f3f3;
     }
 
     header {
@@ -18,6 +20,7 @@
       background-color: #333;
       color: #fff;
       padding: 1rem;
+      font-size: 3rem;
     }
 
     main {
@@ -27,30 +30,72 @@
       padding: 1rem;
     }
 
+    .movie-card {
+      position: relative; 
+      border: 1px solid #ccc;
+      padding: 1rem;
+      text-align: center;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.2s;
+      min-width: 250px; 
+      height: 600px;
+    }
+
+    .movie-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    button {
+      background-color: #666;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #00b3a4;
+    }
+
+    #playlist-list a {
+      color: #666;
+      text-decoration: none; /* Remove underline */
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    #playlist-list a:hover {
+      color: #0056b3;
+    }
+
+    .movie-card button {
+      position: absolute; /* Add absolute positioning for the button */
+      bottom: 10px; /* Adjust the distance from the bottom */
+      right: 10px; /* Adjust the distance from the right */
+      margin-left: 0.5rem;
+    }
+
     #search-section {
       display: flex;
-      gap: 1rem;
+      gap: 2rem;
       margin-bottom: 1rem;
     }
 
     #results-section {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 1rem;
     }
 
-    .movie-card {
-      border: 1px solid #ccc;
-      padding: 1rem;
-      text-align: center;
-      background-color: #f9f9f9;
-    }
-
     #playlist-form-section {
-      margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      position: absolute;
+      top: 20px;
+      right: 10px;
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border: 3px solid #666;
     }
 
     #playlist-form {
@@ -60,12 +105,14 @@
     }
 
     #playlist-display-section {
-      position: fixed;
-      top: 10px;
+      position: absolute;
+      top: 20px;
       left: 10px;
       background-color: #f9f9f9;
       padding: 1rem;
-      border: 1px solid #ccc;
+      border: 3px solid #666;
+      max-height: 200px; /* Set your desired maximum height here */
+      overflow-y: auto;
     }
 
     #playlist-list {
@@ -78,29 +125,6 @@
       margin-bottom: 0.5rem;
     }
 
-    #playlist-list a {
-      color: #333;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    #playlist-list a:hover {
-      color: #666;
-    }
-
-    button {
-      background-color: #333;
-      color: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    button:hover {
-      background-color: #555;
-    }
-
     input[type="text"] {
       padding: 0.5rem;
       border: 1px solid #ccc;
@@ -108,6 +132,38 @@
 
     input[type="checkbox"] {
       margin-right: 0.25rem;
+    }
+
+    /* Add the following CSS for checkbox and label alignment */
+    #public-checkbox {
+      display: flex;
+      align-items: center;
+    }
+
+    #public-checkbox input[type="checkbox"] {
+      margin: 0;
+    }
+
+    #public-checkbox label {
+      margin-right: 0.5rem; /* Add space between the label and checkbox */
+    }
+
+    #public-checkbox button {
+      margin-left: 0.5rem;
+    }
+
+    #playlist-list h3 {
+      font-weight: normal;
+      margin: 2;
+      padding: 1px;
+    }
+
+    #playlist-list h3.public {
+      color: #007BFF; /* Blue color for Public Playlists */
+    }
+
+    #playlist-list h3.private {
+      color: #FF0000; /* Red color for Private Playlists */
     }
 
   </style>
@@ -130,13 +186,16 @@
       <form id="playlist-form">
         <label for="playlist-name">Playlist Name:</label>
         <input type="text" id="playlist-name" required>
-        <label for="public-playlist">Public:</label>
-        <input type="checkbox" id="public-playlist">
+        <!-- Wrap the checkbox and label inside a div with id "public-checkbox" -->
+        <div id="public-checkbox">
+          <label for="public-playlist">Public</label>
+          <input type="checkbox" id="public-playlist">
+        </div>
         <button type="submit">Create</button>
       </form>
     </section>
     <section id="playlist-display-section">
-      <h2>My Playlists</h2>
+      <h1>My Playlists</h1>
       <ul id="playlist-list">
         <!-- Playlist items will be added here dynamically -->
       </ul>
