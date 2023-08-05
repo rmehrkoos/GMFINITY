@@ -21,8 +21,10 @@ function createPlaylist(event) {
     return;
   }
 
-  // Check if the playlist name already exists
-  const existingPlaylist = playlists.find((playlist) => playlist.name === playlistName);
+  // Check if the playlist name already exists (case-insensitive check)
+  const existingPlaylist = playlists.find(
+    (playlist) => playlist.name.toLowerCase() === playlistName.toLowerCase()
+  );
   if (existingPlaylist) {
     alert(`A playlist with the name "${playlistName}" already exists.`);
     return;
