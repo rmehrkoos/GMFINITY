@@ -21,6 +21,13 @@ function createPlaylist(event) {
     return;
   }
 
+  // Check if the playlist name already exists
+  const existingPlaylist = playlists.find((playlist) => playlist.name === playlistName);
+  if (existingPlaylist) {
+    alert(`A playlist with the name "${playlistName}" already exists.`);
+    return;
+  }
+
   // Create a new playlist object
   const newPlaylist = {
     name: playlistName,
@@ -38,6 +45,7 @@ function createPlaylist(event) {
   // Display the updated playlists
   displayPlaylists();
 }
+
 
 // Function to display playlists
 function displayPlaylists() {
